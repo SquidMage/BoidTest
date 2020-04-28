@@ -48,6 +48,8 @@ public class Boid : MonoBehaviour
 	    SearchForFlock();
 	    CalculateFlockData();
 
+	    print(numOfFlock);
+	    
 	    if (numOfFlock != 0)
 	    {
 		    Vector3 offsetToFlockCentre = centreOfFlock - position;
@@ -64,22 +66,23 @@ public class Boid : MonoBehaviour
 		    if (IsHeadingForCollision())
 		    {
 			    Vector3 collisionAvoidDir = ObstacleRays();
+			    print(Vector3.Angle(forward, collisionAvoidDir));
 			    Vector3 collisionAvoidForce = SteerTowards(collisionAvoidDir) * settings.avoidCollisionWeight;
 			    acceleration += collisionAvoidForce;
 		    }
 	    }
 	    
 	    // This is to clamp the speed
-	    velocity += acceleration * Time.deltaTime;
+	    velocity += acceleration * Time.fixedDeltaTime;
 	    float speed = velocity.magnitude;
 	    Vector3 dir = velocity / speed;
 	    speed = Mathf.Clamp(speed, settings.minSpeed, settings.maxSpeed);
 	    velocity = dir * speed;
 
-	    position += velocity * Time.deltaTime;
+	    position += velocity * Time.fixedDeltaTime;
 	    forward = dir;
 
-	    this.transform.position += velocity * Time.deltaTime;
+	    this.transform.position += velocity * Time.fixedDeltaTime;
 	    transform.forward = forward;
     }
 
@@ -123,7 +126,7 @@ public class Boid : MonoBehaviour
     bool IsHeadingForCollision()
     {
 	    RaycastHit hit;
-	    if (Physics.SphereCast(position, settings.boundsRadius, forward, out hit, settings.collisionAvoidDst, settings.obstacleMask))
+	    if (Physics.SphereCast(position, settings.boundsRadius, forward, out hit, settings.collisionAvoidDst))
 	    {
 		    print("Heading for collision");
 		    return true;
@@ -144,7 +147,7 @@ public class Boid : MonoBehaviour
 		    Vector3 dir = transform.TransformDirection((rayDirections[i]));
 		    
 		    Ray ray = new Ray(position, dir);
-		    if (!Physics.SphereCast(ray, settings.boundsRadius, settings.collisionAvoidDst, settings.obstacleMask))
+		    if (!Physics.SphereCast(ray, settings.boundsRadius, settings.collisionAvoidDst))
 		    {
 			    return dir;
 		    }

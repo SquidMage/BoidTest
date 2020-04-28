@@ -18,7 +18,7 @@ public class BoidManager : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (boids != null)
         {
