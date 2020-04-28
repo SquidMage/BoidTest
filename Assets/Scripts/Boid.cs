@@ -7,14 +7,14 @@ public class Boid : MonoBehaviour
 {
 	// NOTE: This is -somewhat- stolen. Credit: Sebastian Lague
 	
-	private BoidManager manager;
-	private BoidSettings settings;
+	[SerializeField] private BoidManager manager;
+	[SerializeField] private BoidSettings settings;
 
 	[SerializeField] private float sqrViewDistance = 4f;
 	[SerializeField] private float viewAngle = 135f;
 	
 	[HideInInspector] public Vector3 position;
-	[HideInInspector] public Vector3 forward;
+	public Vector3 forward;
     public Vector3 velocity;
 
 
@@ -125,11 +125,12 @@ public class Boid : MonoBehaviour
 	    RaycastHit hit;
 	    if (Physics.SphereCast(position, settings.boundsRadius, forward, out hit, settings.collisionAvoidDst, settings.obstacleMask))
 	    {
+		    print("Heading for collision");
 		    return true;
 	    }
 	    else
 	    {
-		    print("Heading for collision");
+		    print("Clear path");
 		    return false;
 	    }
     }
