@@ -56,7 +56,7 @@ public class Boid : MonoBehaviour
 		    
 		    Vector3 alignmentForce = SteerTowards(directionOfFlock) * settings.alignWeight;
 		    Vector3 cohesionForce = SteerTowards(offsetToFlockCentre) * settings.cohesionWeight;
-		    //Vector3 seperationForce = SteerTowards(avgAvoidanceHeading) * settings.seperateWeight;
+		    Vector3 seperationForce = SteerTowards(avgAvoidanceHeading) * settings.seperateWeight;
 		    
 		    // NOTE: Acceleration and force are two different physical quantities and can't be added together.
 		    acceleration += alignmentForce;

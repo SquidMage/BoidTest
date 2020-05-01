@@ -18,7 +18,8 @@ public class BoidSettings : MonoBehaviour
 
     //public float targetWeight = 1;
 
-    [Header("Collisions")] public LayerMask obstacleMask;
+    [Header("Collisions")]
+    public LayerMask obstacleMask;
     public float boundsRadius = .27f;
     public float avoidCollisionWeight = 10;
     public float collisionAvoidDst = 5;
